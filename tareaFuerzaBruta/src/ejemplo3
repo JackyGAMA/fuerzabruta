@@ -1,0 +1,27 @@
+public class KnapsackProblem {
+    static int maxProfit = 0;
+
+    public static void main(String[] args) {
+        int[] weights = {2, 3, 4, 5};
+        int[] values = {3, 4, 5, 8};
+        int capacity = 8;
+
+        findMaxValue(weights, values, capacity, 0, 0, 0);
+        System.out.println("Valor máximo que podemos llevar: " + maxProfit);
+    }
+
+    public static void findMaxValue(int[] weights, int[] values, int capacity, int index, int currentWeight, int currentValue) {
+        if (index == weights.length) {
+            if (currentWeight <= capacity && currentValue > maxProfit) {
+                maxProfit = currentValue;
+            }
+            return;
+        }
+
+        // No incluir el objeto
+        findMaxValue(weights, values, capacity, index + 1, currentWeight, currentValue);
+
+        // Incluir el objeto
+        findMaxValue(weights, values, capacity, index + 1, currentWeight + weights[index], currentValue + values[index]);
+    }
+}

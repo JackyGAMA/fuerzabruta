@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class CoinChange {
+    static List<Integer> bestCombination = null;
+
+    public static void main(String[] args) {
+        int[] coins = {1, 2, 5};
+        int amount = 11;
+        List<Integer> combination = new ArrayList<>();
+        findCombination(coins, amount, combination);
+
+        if (bestCombination != null) {
+            System.out.println("Mejor combinación: " + bestCombination);
+            System.out.println("Número mínimo de monedas: " + bestCombination.size());
+        } else {
+            System.out.println("No es posible alcanzar la cantidad.");
+        }
+    }
+
+    public static void findCombination(int[] coins, int amount, List<Integer> combination) {
+        if (amount == 0) {
+            if (bestCombination == null || combination.size() < bestCombination.size()) {
+                bestCombination = new ArrayList<>(combination);
+            }
+            return;
+        }
+
+        for (int coin : coins) {
+            if (amount >= coin) {
+                combination.add(coin);
+                findCombination(coins, amount - coin, combination);
+                combination.remove(combination.size() - 1);
+            }
+        }
+    }
+}
